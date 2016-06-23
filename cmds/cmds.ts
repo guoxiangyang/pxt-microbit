@@ -37,7 +37,7 @@ function getBitDrivesAsync(): Promise<string[]> {
                 })
                 return res
             })
-    } else if (process.platform == "darwin") {
+    } else {
         return execAsync("ls /Volumes")
             .then(buf => {
                 let res: string[] = []
@@ -49,7 +49,5 @@ function getBitDrivesAsync(): Promise<string[]> {
                 })
                 return res
             })
-    } else {
-        return Promise.resolve([])
     }
 }
