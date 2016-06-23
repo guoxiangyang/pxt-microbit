@@ -37,6 +37,18 @@ function getBitDrivesAsync(): Promise<string[]> {
                 })
                 return res
             })
+    } else if (process.platform == "darwin") {
+        return execAsync("ls /Volumes")
+            .then(buf => {
+                let res: string[] = []
+                buf.toString("utf8").split(/\n/).forEach(ln => {
+                    let m = /^MICROBIT[ 0-9]*/.exec(ln)
+                    if (m) {
+                        res.push("/Volumes/" + ln + "/")
+                    }
+                })
+                return res
+            })
     } else {
         return Promise.resolve([])
     }
